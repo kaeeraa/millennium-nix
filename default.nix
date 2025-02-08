@@ -24,6 +24,7 @@ stdenv.mkDerivation (finalAttrs: {
     cmake
     python3
     ninja
+    clang
   ];
 
   meta = with lib; {
