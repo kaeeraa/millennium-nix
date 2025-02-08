@@ -5,6 +5,7 @@
   python3,
   ninja,
   lib,
+  clang,
 }:
 stdenv.mkDerivation (finalAttrs: {
   pname = "millennium";
