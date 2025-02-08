@@ -6,6 +6,9 @@
   ninja,
   lib,
   clang,
+  glibc,
+  autoPatchelfHook,
+  zlib,
 }:
 stdenv.mkDerivation (finalAttrs: {
   pname = "millennium";
@@ -20,12 +23,31 @@ stdenv.mkDerivation (finalAttrs: {
     hash = "sha256-Cn84DPxFSGHdx47u3kGh0hDxaQoS5dX1YOMy3VyH+e4=";
   };
 
+  env.NIX_CFLAGS_COMPILE = "-march=x86-64-v3";
+  NIX_LDFLAGS = "--hash-style=both";
+
+  cmakeFlags = [
+    "-GNinja"
+    "-DCMAKE_BUILD_TYPE=Debug"
+  ];
+
   nativeBuildInputs = [
     cmake
     python3
     ninja
     clang
+    autoPatchelfHook
   ];
+
+  buildInputs = [
+    glibc
+    zlib
+    stdenv.cc
+  ];
+
+  preFixup = ''
+    qtWrapperArgs+=(--prefix LD_LIBRARY_PATH : ${lib.makeLibraryPath buildInputs})
+  '';
 
   meta = with lib; {
     homepage = "https://github.com/shdwmtr/millennium";
