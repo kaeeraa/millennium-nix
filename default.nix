@@ -45,10 +45,6 @@ stdenv.mkDerivation (finalAttrs: {
     stdenv.cc
   ];
 
-  preFixup = ''
-    qtWrapperArgs+=(--prefix LD_LIBRARY_PATH : ${lib.makeLibraryPath buildInputs})
-  '';
-
   meta = with lib; {
     homepage = "https://github.com/shdwmtr/millennium";
     description = "Millennium is an open-source low-code modding framework to create, manage and use themes/plugins for the desktop Steam Client without any low-level internal interaction or overhead.";
